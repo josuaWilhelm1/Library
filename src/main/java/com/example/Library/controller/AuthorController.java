@@ -53,4 +53,10 @@ public class AuthorController {
         return "all Authors deleted";
     }
 
+    @GetMapping("/testCustomQuery")
+    public List<Author> testCustomQuery() {
+        List<Author> authors = authorRepository.customQuery();
+        return authors;
+    }
+
 }
