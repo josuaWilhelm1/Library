@@ -3,51 +3,54 @@ package com.example.Library.controller;
 import com.example.Library.model.Book;
 import com.example.Library.repo.SomethingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
-@Controller
-@RequestMapping(path = "/test")
+@RestController
+@RequestMapping(path = "/v1")
 
 public class BookController {
     @Autowired
     private SomethingRepository bookRepository;
 
- @PostMapping("/saveBook")
-    public String saveBook(@RequestBody Book book) {
-        bookRepository.save(book);
-        return ("Book saved");
+    // Book  endpoint
+    @PostMapping("/book")
+    public Book createBook(@RequestBody Book book) {
+        Book newBook = bookRepository.save(book);
+        return (newBook);
     }
 
-    public String deleteBookById( Integer id) {
-        bookRepository.deleteById(id);
-        return ("Book" +id+" deleted");
+    @DeleteMapping("/book")
+    public String deleteBookById(@PathVariable Integer id) {
+        return ("TBD");
     }
+//    public String deleteBookById(@PathVariable Integer id) {
+//        bookRepository.deleteById(id);
+//        return ("Book" + id + " deleted");
+//    }
 
-
-    public Optional<Book> getBookById(Integer id) {
-        Optional<Book> book = bookRepository.findById(id);
-        return book;
+    @GetMapping("/book")
+    @DeleteMapping("/book")
+    public String getBookById(@PathVariable Integer id) {
+        return ("TBD");
     }
+//    public Optional<Book> getBookById(@PathVariable Integer id) {
+//        Optional<Book> book = bookRepository.findById(id);
+//        return book;
+//    }
 
-    @GetMapping("/getAllBooks)")
+    //Books Endpoint
+    @GetMapping("/books")
     public List<Book> getAllBooks() {
         List<Book> books = bookRepository.findAll();
         return books;
     }
 
-
-    public void borrowBook(Integer id) {
-        Optional<Book> book= bookRepository.findById(id);
-        book.ifPresent(something -> something.setAvailable(false));
-    }
-
-    public void returnBook(Integer id) {
-        Optional<Book> book= bookRepository.findById(id);
-        book.ifPresent(something -> something.setAvailable(true));
+    @DeleteMapping("/books")
+    public String deleteAllBooks() {
+        bookRepository.deleteAll();
+        return "all Books deleted";
     }
 
 }
