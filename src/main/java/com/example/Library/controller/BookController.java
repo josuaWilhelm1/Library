@@ -4,15 +4,14 @@ import com.example.Library.model.Book;
 import com.example.Library.repo.SomethingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
+@RequestMapping(path = "/test")
+
 public class BookController {
     @Autowired
     private SomethingRepository bookRepository;
