@@ -4,6 +4,7 @@ import com.example.Library.model.Book;
 import com.example.Library.repo.SomethingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.Optional;
 
 import java.util.List;
 
@@ -21,24 +22,17 @@ public class BookController {
         return (newBook);
     }
 
-    @DeleteMapping("/book")
+    @DeleteMapping("/book/{id}")
     public String deleteBookById(@PathVariable Integer id) {
-        return ("TBD");
+        bookRepository.deleteById(id);
+        return ("Book" + id + " deleted");
     }
-//    public String deleteBookById(@PathVariable Integer id) {
-//        bookRepository.deleteById(id);
-//        return ("Book" + id + " deleted");
-//    }
 
-    @GetMapping("/book")
-    @DeleteMapping("/book")
-    public String getBookById(@PathVariable Integer id) {
-        return ("TBD");
+    @GetMapping("/book/{id}")
+    public Optional<Book> getBookById(@PathVariable Integer id) {
+        Optional<Book> book = bookRepository.findById(id);
+        return book;
     }
-//    public Optional<Book> getBookById(@PathVariable Integer id) {
-//        Optional<Book> book = bookRepository.findById(id);
-//        return book;
-//    }
 
     //Books Endpoint
     @GetMapping("/books")

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/v1")
@@ -21,23 +22,18 @@ public class AuthorController {
         return (author);
     }
 
-    @DeleteMapping("/author")
-    public String deleteAuthorById(@PathVariable Integer id) {
-        return "TBD";
+    @DeleteMapping("/author/{id}")
+        public String deleteAuthorById(@PathVariable Integer id) {
+        authorRepository.deleteById(id);
+        return ("Author" + id + " deleted");
     }
+    @GetMapping("/author/{id}")
+    public Optional<Author> getAuthorById(@PathVariable Integer id) {
+        System.out.println(id);
 
-    //    public String deleteAuthorById(@PathVariable Integer id) {
-//        authorRepository.deleteById(id);
-//        return ("Author" + id + " deleted");
-//    }
-    @GetMapping("/author")
-    public String getAuthorById(@PathVariable Integer id) {
-        return "TBD";
+        Optional<Author> author = authorRepository.findById(id);
+        return author;
     }
-//    public Optional<Author> getAuthorById(@PathVariable Integer id) {
-//        Optional<Author> author = authorRepository.findById(id);
-//        return author;
-//    }
 
 
     //Authors Endpoint

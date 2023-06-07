@@ -1,0 +1,25 @@
+//Drop all Tables
+drop table rental, rental_seq, book, book_seq, author, author_seq  ;
+
+
+//Triggers
+CREATE TRIGGER rent_book
+AFTER INSERT ON rental
+FOR EACH ROW
+UPDATE book
+SET available = false
+WHERE id = NEW.book_id;
+
+CREATE TRIGGER return_book
+AFTER Update ON rental
+FOR EACH ROW
+UPDATE book
+SET available = true
+WHERE id = NEW.book_id;
+
+CREATE TRIGGER count_rentals
+AFTER INSERT ON rental
+FOR EACH ROW
+UPDATE book
+SET rental_count = rental_count + 1
+WHERE id = NEW.book_id;

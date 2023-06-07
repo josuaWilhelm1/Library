@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/v1")
@@ -16,33 +17,29 @@ public class RentalController {
 
     // rental Endpoint
     @PostMapping("/rental")
-    public Rental createRental(@RequestBody Rental rental) {
+    public Rental rentBook(@RequestBody Rental rental) {
         Rental newRental = rentalRepository.save(rental);
         return (newRental);
     }
 
-    @GetMapping("/rental")
-    public String getRentalById(@PathVariable Integer id) {
-        return "TBD";
-    }
-//        public Optional<Rental> getRentalById(@PathVariable Integer id) {
-//        Optional<Rental> rental  = rentalRepository.findById(id);
-//        return rental;
-//    }
-
-    @PatchMapping("/rental")
-    public String updateRental(Integer book_id) {
-        return "TBD";
+    @GetMapping("/rental/{id}")
+        public Optional<Rental> getRentalById(@PathVariable Integer id) {
+        Optional<Rental> rental  = rentalRepository.findById(id);
+        return rental;
     }
 
-    @DeleteMapping("/rental")
-    public String deleteRentalById(@PathVariable Integer id) {
-        return "TBD";
-    }
-//        public String deleteRentalById(@PathVariable Integer id) {
-//        rentalRepository.deleteById(id);
-//        return ("Rental " + id+" deleted");
+//    @PatchMapping("/rental")
+//    public String returnRental(Integer rental_id) {
+//        Rental rental = rentalRepository.findById(rental_id).orElseThrow(() -> new RuntimeException("Rental not found"));
+//        rental.setReturned(true);
+//        rentalRepository.save(rental);
 //    }
+
+    @DeleteMapping("/rental/{id}")
+        public String deleteRentalById(@PathVariable Integer id) {
+        rentalRepository.deleteById(id);
+        return ("Rental " + id+" deleted");
+    }
 
     // rentals Endpoint
     @GetMapping("/rentals")
