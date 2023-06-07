@@ -23,13 +23,13 @@ public class BookController {
     }
 
     @DeleteMapping("/book/{id}")
-    public String deleteBookById(@PathVariable Integer id) {
+    public String deleteBookById(@PathVariable Long id) {
         bookRepository.deleteById(id);
         return ("Book" + id + " deleted");
     }
 
     @GetMapping("/book/{id}")
-    public Optional<Book> getBookById(@PathVariable Integer id) {
+    public Optional<Book> getBookById(@PathVariable Long id) {
         Optional<Book> book = bookRepository.findById(id);
         return book;
     }

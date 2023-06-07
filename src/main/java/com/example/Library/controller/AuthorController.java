@@ -23,12 +23,12 @@ public class AuthorController {
     }
 
     @DeleteMapping("/author/{id}")
-        public String deleteAuthorById(@PathVariable Integer id) {
+        public String deleteAuthorById(@PathVariable Long id) {
         authorRepository.deleteById(id);
         return ("Author" + id + " deleted");
     }
     @GetMapping("/author/{id}")
-    public Optional<Author> getAuthorById(@PathVariable Integer id) {
+    public Optional<Author> getAuthorById(@PathVariable Long id) {
         System.out.println(id);
 
         Optional<Author> author = authorRepository.findById(id);
@@ -49,10 +49,10 @@ public class AuthorController {
         return "all Authors deleted";
     }
 
-    @GetMapping("/testCustomQuery")
-    public List<Author> testCustomQuery() {
-        List<Author> authors = authorRepository.customQuery();
-        return authors;
-    }
+//    @GetMapping("/testCustomQuery")
+//    public List<Author> testCustomQuery() {
+//        List<Author> authors = authorRepository.customQuery();
+//        return authors;
+//    }
 
 }
