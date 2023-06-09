@@ -18,7 +18,7 @@ public class Rental {
     @JoinColumn(name = "book_id")
     private Book book;
 
-    private LocalDate returnDate = LocalDate.now().plusMonths(1) ;
+    private LocalDate returnDate = LocalDate.now().minusMonths(1) ;
 
     private boolean returned = false;
 

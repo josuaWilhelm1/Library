@@ -67,6 +67,13 @@ public class RentalController {
         return rentalService.getAllRentals();
     }
 
+    @GetMapping("/rentals/overdue")
+    public ResponseEntity<List<Rental>> getOverdueRentals() {
+        List<Rental> overdueRentals = rentalService.getOverdueRentals();
+        return ResponseEntity.ok(overdueRentals);
+    }
+
+
     @DeleteMapping("/rentals")
     public ResponseEntity<String> deleteAllRentals() {
         rentalService.deleteAllRentals();

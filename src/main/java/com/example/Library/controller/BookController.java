@@ -1,9 +1,6 @@
 package com.example.Library.controller;
 
-import com.example.Library.exception.AuthorHasBooksException;
-import com.example.Library.exception.AuthorNotFoundException;
-import com.example.Library.exception.BookHasRentalsException;
-import com.example.Library.exception.BookNotFoundException;
+import com.example.Library.exception.*;
 import com.example.Library.model.Book;
 import com.example.Library.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -51,8 +48,48 @@ public class BookController {
     }
 
     @GetMapping("/books")
-    public List<Book> getAllBooks() {
-        return bookService.getAllBooks();
+    public ResponseEntity<List<Book>> getAllBooks() {
+        List<Book> books = bookService.getAllBooks();
+        return ResponseEntity.ok(books);
+    }
+
+    @GetMapping("/books/available")
+    public ResponseEntity<List<Book>> getAvailableBooks() {
+        List<Book> books = bookService.getAvailableBooks();
+        return ResponseEntity.ok(books);
+    }
+
+    @GetMapping("/books/unavailable")
+    public ResponseEntity<?> getUnavailableBooks() {
+        try {
+            List<Book> books = bookService.getUnavailableBooks();
+            return ResponseEntity.ok(books);
+        } catch (BookNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Error retrieving unavailable books: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/books/available/byGenre")
+    public ResponseEntity<?> getAvailableBooksByGenre(@RequestParam("genre") String genre) {
+        try {
+            List<Book> books = bookService.getAvailableBooksByGenre(genre);
+            return ResponseEntity.ok(books);
+        } catch (GenreNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Error retrieving available books: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/books/available/byAuthor/{authorId}")
+    public ResponseEntity<?> getAvailableBooksByAuthor(@PathVariable Long authorId) {
+        try {
+            List<Book> books = bookService.getAvailableBooksByAuthor(authorId);
+            return ResponseEntity.ok(books);
+        } catch (AuthorNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Author not found: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/books")

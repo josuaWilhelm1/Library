@@ -10,6 +10,7 @@ import com.example.Library.repo.RentalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,8 +68,13 @@ public class RentalService {
     public List<Rental> getAllRentals() {
         return rentalRepository.findAll();
     }
-
+    public List<Rental> getOverdueRentals() {
+        LocalDate currentDate = LocalDate.now();
+        return rentalRepository.findByReturnDateBeforeAndReturnedFalse(currentDate);
+    }
     public void deleteAllRentals() {
         rentalRepository.deleteAll();
     }
+
+
 }
