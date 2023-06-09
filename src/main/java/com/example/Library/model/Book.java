@@ -5,6 +5,8 @@ import lombok.Data;
 
 @Entity
 @Data
+@Table(name = "book")
+
 public class Book {
     @Id
     @GeneratedValue
