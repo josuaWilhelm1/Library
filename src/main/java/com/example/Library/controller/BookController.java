@@ -1,50 +1,67 @@
 package com.example.Library.controller;
 
+import com.example.Library.exception.AuthorHasBooksException;
+import com.example.Library.exception.AuthorNotFoundException;
+import com.example.Library.exception.BookHasRentalsException;
+import com.example.Library.exception.BookNotFoundException;
 import com.example.Library.model.Book;
-import com.example.Library.repo.SomethingRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.Library.service.BookService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.Optional;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/v1")
-
+@RequiredArgsConstructor
 public class BookController {
-    @Autowired
-    private SomethingRepository bookRepository;
+    private final BookService bookService;
 
-    // Book  endpoint
     @PostMapping("/book")
-    public Book createBook(@RequestBody Book book) {
-        Book newBook = bookRepository.save(book);
-        return (newBook);
+    public ResponseEntity<?> createBook(@RequestBody Book book) {
+        try {
+            Book createdBook = bookService.createBook(book);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdBook);
+        } catch (AuthorNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Author not found: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/book/{id}")
-    public String deleteBookById(@PathVariable Long id) {
-        bookRepository.deleteById(id);
-        return ("Book" + id + " deleted");
+    public ResponseEntity<String> deleteBookById(@PathVariable Long id) {
+        try {
+            bookService.deleteBookById(id);
+            return ResponseEntity.ok("Book " + id + " deleted");
+        } catch (BookNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (BookHasRentalsException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @GetMapping("/book/{id}")
-    public Optional<Book> getBookById(@PathVariable Long id) {
-        Optional<Book> book = bookRepository.findById(id);
-        return book;
+    public ResponseEntity<Book> getBookById(@PathVariable Long id) {
+        Optional<Book> book = bookService.getBookById(id);
+        return book.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    //Books Endpoint
     @GetMapping("/books")
     public List<Book> getAllBooks() {
-        List<Book> books = bookRepository.findAll();
-        return books;
+        return bookService.getAllBooks();
     }
 
     @DeleteMapping("/books")
-    public String deleteAllBooks() {
-        bookRepository.deleteAll();
-        return "all Books deleted";
+    public ResponseEntity<String> deleteAllBooks() {
+        try {
+            bookService.deleteAllBooks();
+            return ResponseEntity.ok("All books deleted");
+        } catch (BookHasRentalsException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
-
 }

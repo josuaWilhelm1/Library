@@ -1,11 +1,13 @@
 package com.example.Library.service;
 
+import com.example.Library.exception.BookAlreadyReturnedException;
+import com.example.Library.exception.BookNotAvailableException;
+import com.example.Library.exception.RentalNotFoundException;
 import com.example.Library.model.Book;
 import com.example.Library.model.Rental;
-import com.example.Library.repo.SomethingRepository;
+import com.example.Library.repo.BookRepo;
 import com.example.Library.repo.RentalRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +19,7 @@ import java.util.Optional;
 public class RentalService {
 
     private final RentalRepository rentalRepository;
-    private final SomethingRepository bookRepository;
+    private final BookRepo bookRepository;
 
     public Rental rentBook(Rental rental) {
         Long bookId = rental.getBook().getId();
@@ -26,25 +28,42 @@ public class RentalService {
         if (availability) {
             return rentalRepository.save(rental);
         } else {
-            throw new RuntimeException("Book not available");
+            throw new BookNotAvailableException("Book is already rented");
         }
     }
 
+
     public Optional<Rental> getRentalById(Long id) {
-        return rentalRepository.findById(id);
+        Optional<Rental> rental = rentalRepository.findById(id);
+        if (rental.isPresent()) {
+            return rental;
+        } else {
+            throw new RentalNotFoundException("Rental not found");
+        }
     }
 
     public Rental returnBook(Long id) {
         Rental rental = rentalRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Rental not found"));
+                .orElseThrow(() -> new RentalNotFoundException("Rental not found"));
+
+        if (rental.isReturned()) {
+            throw new BookAlreadyReturnedException("Book is already returned");
+        }
+
         rental.setReturned(true);
         return rentalRepository.save(rental);
     }
 
-    public void deleteRentalById(Long id) {
-        rentalRepository.deleteById(id);
-    }
 
+
+    public void deleteRentalById(Long id) {
+        Optional<Rental> rental = rentalRepository.findById(id);
+        if (rental.isPresent()) {
+            rentalRepository.deleteById(id);
+        } else {
+            throw new RentalNotFoundException("Rental not found");
+        }
+    }
     public List<Rental> getAllRentals() {
         return rentalRepository.findAll();
     }

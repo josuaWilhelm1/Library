@@ -1,8 +1,13 @@
 package com.example.Library.controller;
 
+import com.example.Library.exception.AuthorHasBooksException;
+import com.example.Library.exception.AuthorNotFoundException;
 import com.example.Library.model.Author;
 import com.example.Library.repo.AuthorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.Library.service.AuthorService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,49 +15,49 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/v1")
-
+@RequiredArgsConstructor
 public class AuthorController {
-    @Autowired
-    private AuthorRepository authorRepository;
+    private final AuthorService authorService;
 
-    //Author Endpoint
     @PostMapping("/author")
-    public Author createAuthor(@RequestBody Author author) {
-        authorRepository.save(author);
-        return (author);
+    public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(authorService.createAuthor(author));
     }
 
     @DeleteMapping("/author/{id}")
-        public String deleteAuthorById(@PathVariable Long id) {
-        authorRepository.deleteById(id);
-        return ("Author" + id + " deleted");
+    public ResponseEntity<String> deleteAuthorById(@PathVariable Long id) {
+        try {
+            authorService.deleteAuthorById(id);
+            return ResponseEntity.ok("Author " + id + " deleted");
+        } catch (AuthorNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Error deleting author: " + e.getMessage());
+        } catch (AuthorHasBooksException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Error deleting author: " + e.getMessage());
+        }
     }
+
     @GetMapping("/author/{id}")
-    public Optional<Author> getAuthorById(@PathVariable Long id) {
-        System.out.println(id);
-
-        Optional<Author> author = authorRepository.findById(id);
-        return author;
+    public ResponseEntity<Author> getAuthorById(@PathVariable Long id) {
+        Optional<Author> author = authorService.getAuthorById(id);
+        return author.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-
-    //Authors Endpoint
     @GetMapping("/authors")
     public List<Author> getAllAuthors() {
-        List<Author> authors = authorRepository.findAll();
-        return authors;
+        return authorService.getAllAuthors();
     }
 
     @DeleteMapping("/authors")
-    public String deleteAllAuthors() {
-        authorRepository.deleteAll();
-        return "all Authors deleted";
+    public ResponseEntity<String> deleteAllAuthors() {
+        try {
+            authorService.deleteAllAuthors();
+            return ResponseEntity.ok("All authors deleted");
+        } catch (AuthorHasBooksException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Error deleting authors: " + e.getMessage());
+        }
     }
-
-//    @GetMapping("/testCustomQuery")
-//    public List<Author> testCustomQuery() {
-//        List<Author> authors = authorRepository.customQuery();
-//        return authors;
-//    }
-
 }

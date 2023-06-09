@@ -17,7 +17,7 @@
 #                                                             (3, 3, '2023-06-03', false);
 
 -- Create rent_book Trigger
-CREATE TRIGGER rent_book
+CREATE TRIGGER IF NOT EXISTS rent_book
     AFTER INSERT ON rental
     FOR EACH ROW
     UPDATE book
@@ -25,7 +25,7 @@ CREATE TRIGGER rent_book
     WHERE id = NEW.book_id;
 
 -- Create rent_book Trigger
-CREATE TRIGGER return_book
+CREATE TRIGGER IF NOT EXISTS return_book
     AFTER Update ON rental
     FOR EACH ROW
     UPDATE book
@@ -33,7 +33,7 @@ CREATE TRIGGER return_book
     WHERE id = NEW.book_id;
 
 -- Create rent_book Trigger
-CREATE TRIGGER count_rentals
+CREATE TRIGGER IF NOT EXISTS count_rentals
     AFTER INSERT ON rental
     FOR EACH ROW
     UPDATE book
