@@ -3,7 +3,6 @@ package com.example.Library.controller;
 import com.example.Library.exception.AuthorHasBooksException;
 import com.example.Library.exception.AuthorNotFoundException;
 import com.example.Library.model.Author;
-import com.example.Library.repo.AuthorRepository;
 import com.example.Library.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
