@@ -11,11 +11,11 @@ public interface BookRepo extends JpaRepository<Book, Long> {
 
 
     boolean existsByAuthor(Author author);
-
-
-    List<Book> findByAuthorAndAvailable(Author author, boolean b);
-
-    List<Book> findByGenreAndAvailable(String genre, boolean b);
+    
 
     List<Book> findByAvailable(boolean b);
+
+    List<Book> findByAuthor(Author author, boolean b);
+
+    List<Book> findByGenre(String genre, boolean b);
 }

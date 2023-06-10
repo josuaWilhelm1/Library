@@ -15,6 +15,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/v1")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class AuthorController {
     private final AuthorService authorService;
 

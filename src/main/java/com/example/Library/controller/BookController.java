@@ -14,6 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/v1")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class BookController {
     private final BookService bookService;
 
@@ -70,10 +71,10 @@ public class BookController {
         }
     }
 
-    @GetMapping("/books/available/byGenre")
-    public ResponseEntity<?> getAvailableBooksByGenre(@RequestParam("genre") String genre) {
+    @GetMapping("/books/byGenre")
+    public ResponseEntity<?> getABooksByGenre(@RequestParam("genre") String genre) {
         try {
-            List<Book> books = bookService.getAvailableBooksByGenre(genre);
+            List<Book> books = bookService.getBooksByGenre(genre);
             return ResponseEntity.ok(books);
         } catch (GenreNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -81,10 +82,10 @@ public class BookController {
         }
     }
 
-    @GetMapping("/books/available/byAuthor/{authorId}")
-    public ResponseEntity<?> getAvailableBooksByAuthor(@PathVariable Long authorId) {
+    @GetMapping("/books/byAuthor/{authorId}")
+    public ResponseEntity<?> getBooksByAuthor(@PathVariable Long authorId) {
         try {
-            List<Book> books = bookService.getAvailableBooksByAuthor(authorId);
+            List<Book> books = bookService.getBooksByAuthor(authorId);
             return ResponseEntity.ok(books);
         } catch (AuthorNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
