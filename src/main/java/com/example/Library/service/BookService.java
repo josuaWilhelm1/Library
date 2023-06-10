@@ -79,14 +79,14 @@ public class BookService {
     public List<Book> getBooksByAuthor(Long authorId) {
         Optional<Author> author = authorRepository.findById(authorId);
         if (author.isPresent()) {
-            return bookRepository.findByAuthor(author.get(), true);
+            return bookRepository.findByAuthor(author.get());
         } else {
             throw new AuthorNotFoundException("Author not found");
         }
     }
 
     public List<Book> getBooksByGenre(String genre) {
-        List<Book> books = bookRepository.findByGenre(genre, true);
+        List<Book> books = bookRepository.findByGenre(genre);
         if (books.isEmpty()) {
             throw new GenreNotFoundException("No available books found for genre: " + genre);
         }

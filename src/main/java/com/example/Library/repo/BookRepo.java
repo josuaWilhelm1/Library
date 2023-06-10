@@ -15,7 +15,7 @@ public interface BookRepo extends JpaRepository<Book, Long> {
 
     List<Book> findByAvailable(boolean b);
 
-    List<Book> findByAuthor(Author author, boolean b);
+    List<Book> findByAuthor(Author author);
 
-    List<Book> findByGenre(String genre, boolean b);
+    List<Book> findByGenre(String genre);
 }
