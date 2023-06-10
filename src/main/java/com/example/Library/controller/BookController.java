@@ -1,6 +1,8 @@
 package com.example.Library.controller;
 
-import com.example.Library.exception.*;
+import com.example.Library.exception.AuthorNotFoundException;
+import com.example.Library.exception.BookHasRentalsException;
+import com.example.Library.exception.BookNotFoundException;
 import com.example.Library.model.Book;
 import com.example.Library.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -62,24 +64,18 @@ public class BookController {
 
     @GetMapping("/books/unavailable")
     public ResponseEntity<?> getUnavailableBooks() {
-        try {
-            List<Book> books = bookService.getUnavailableBooks();
-            return ResponseEntity.ok(books);
-        } catch (BookNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Error retrieving unavailable books: " + e.getMessage());
-        }
+
+        List<Book> books = bookService.getUnavailableBooks();
+        return ResponseEntity.ok(books);
+
     }
 
     @GetMapping("/books/byGenre")
-    public ResponseEntity<?> getABooksByGenre(@RequestParam("genre") String genre) {
-        try {
-            List<Book> books = bookService.getBooksByGenre(genre);
-            return ResponseEntity.ok(books);
-        } catch (GenreNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Error retrieving available books: " + e.getMessage());
-        }
+    public ResponseEntity<?> getBooksByGenre(@RequestParam("genre") String genre) {
+
+        List<Book> books = bookService.getBooksByGenre(genre);
+        return ResponseEntity.ok(books);
+
     }
 
     @GetMapping("/books/byAuthor/{authorId}")

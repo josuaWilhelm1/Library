@@ -70,9 +70,6 @@ public class BookService {
 
     public List<Book> getUnavailableBooks() {
         List<Book> books = bookRepository.findByAvailable(false);
-        if (books.isEmpty()) {
-            throw new BookNotFoundException("No unavailable books found");
-        }
         return books;
     }
 
@@ -87,9 +84,6 @@ public class BookService {
 
     public List<Book> getBooksByGenre(String genre) {
         List<Book> books = bookRepository.findByGenre(genre);
-        if (books.isEmpty()) {
-            throw new GenreNotFoundException("No available books found for genre: " + genre);
-        }
         return books;
     }
 
