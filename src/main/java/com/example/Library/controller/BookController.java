@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/v1")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
 public class BookController {
     private final BookService bookService;
 

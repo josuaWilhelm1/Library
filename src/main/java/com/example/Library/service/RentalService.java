@@ -78,4 +78,13 @@ public class RentalService {
     }
 
 
+    public List<Rental> getOngoingRentals() {
+        return rentalRepository.findByReturnedFalse();
+
+    }
+
+    public List<Rental> getReturnedRentals() {
+        return rentalRepository.findByReturnedTrue();
+
+    }
 }

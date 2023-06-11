@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/v1")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
 public class RentalController {
     private final RentalService rentalService;
 
@@ -71,6 +71,16 @@ public class RentalController {
     @GetMapping("/rentals/overdue")
     public ResponseEntity<List<Rental>> getOverdueRentals() {
         List<Rental> overdueRentals = rentalService.getOverdueRentals();
+        return ResponseEntity.ok(overdueRentals);
+    }
+    @GetMapping("/rentals/ongoing")
+    public ResponseEntity<List<Rental>> getOngoingRentals() {
+        List<Rental> overdueRentals = rentalService.getOngoingRentals();
+        return ResponseEntity.ok(overdueRentals);
+    }
+    @GetMapping("/rentals/returned")
+    public ResponseEntity<List<Rental>> getReturnedRentals() {
+        List<Rental> overdueRentals = rentalService.getReturnedRentals();
         return ResponseEntity.ok(overdueRentals);
     }
 

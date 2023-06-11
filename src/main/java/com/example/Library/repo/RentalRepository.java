@@ -11,4 +11,8 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
 
     boolean existsByBook(Book book);
     List<Rental> findByReturnDateBeforeAndReturnedFalse(LocalDate currentDate);
+
+    List<Rental> findByReturnedFalse();
+
+    List<Rental> findByReturnedTrue();
 }
