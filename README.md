@@ -1,32 +1,42 @@
-# This is the backend for the Library Application
+# Library Application Backend
 
+This repository contains the backend code for the Library Application.
 
-## To run this backend pls:
-    - run 'mvn clean' in root folder (.../Library)
-    - run 'mvn install' in root folder (.../Library)
-    - run 'mvn spring-boot:run'  in root folder (.../Library)
+## Prerequisites
 
+Before running the backend, ensure that you have the following software and configurations in place:
 
-## Default port for backend: 'localhost:8080'
-    - this can be changed in the application.properties by adding 'server.port=8081'
+- Java Development Kit (JDK): Verify that JDK is installed by running the command `java -version` in the terminal.
+- Apache Maven: Verify that Maven is installed by running the command `mvn -v` in the terminal.
+- MySQL Database: Set up a MySQL database with an empty schema called 'librarydb' and ensure it's running on `localhost:3306`. You can modify the database connection settings in the 'application.properties' file.
 
-## The Frontend has to run on localhost:4200 to avoid Cross Origin Error when calling the Controllers
-    - this can be changed in the Controllers by changing '@CrossOrigin(origins = "http://localhost:4200")' in the 3 Controllers inside of the package 'com.example.Library.controller'
+## Getting Started
 
-## A MySQL Database is needed to run the backend with a empty schema called: 'librarydb'.
-    - the backend tries to connect to the db via 'localhost:3306'
-      - the schema name and port can be changed in the application properties by changing 'spring.datasource.url=jdbc:mysql://localhost:3306/librarydb?serverTimezone=UTC&useSSL=false&autoReconnect=true'
-    - the credentials for the MySQL DB are 'username':root', 'password:root'
-      - the credentials can be changed by changing: 'spring.datasource.username=root' and 'spring.datasource.password=root' in the 'application.properties'
+To run the backend, follow these steps:
 
-## On Program startup the data.sql file gets loaded. This file has 2 jobs:
-    - For presentation purposes: load initial data into the DB
-      - '-- Drop Triggers', '-- Delete Table Contents', '-- Insert Authors', '-- Insert Books', '-- Insert Rentals', '-- Set Autoincrement to fitting ID'
-    - Important part of regular application: Inserts Triggers into the DB
-    - '-- Create Trigger'
-    - If you want to run the project without clearing all Data on Project Start and Item Load up pls delete or comment out the sections (-- Drop Triggers, -- Delete Table Contents, -- Insert Authors, -- Insert Books, -- Insert Rentals, -- Set Autoincrement to fitting ID)
-        - Only the Section '-- Create Trigger' should be left (Warning commenting out with # does not work, use the "--" syntax)
+1. Clone this repository to your local machine.
+2. Open a terminal and navigate to the root folder of the backend project.
+3. Clean the project by running the command: `mvn clean`
+4. Build the project by running the command: `mvn install`
+5. Start the backend server by running the command: `mvn spring-boot:run`
 
+## Customizing the Port
 
+By default, the backend runs on `localhost:8080`. If you want to change the port, you can modify the 'server.port' property in the 'application.properties' file.
 
+## Cross-Origin Resource Sharing (CORS)
 
+To avoid Cross-Origin errors when calling the controllers from the frontend, the backend allows requests from `localhost:4200` by default. You can modify the '@CrossOrigin' annotation in the controllers located in the 'com.example.Library.controller' package to specify different allowed origins.
+
+## Database Configuration
+
+The backend connects to the MySQL database using the credentials 'username: root' and 'password: root' by default. You can modify the 'spring.datasource.username' and 'spring.datasource.password' properties in the 'application.properties' file to match your database credentials.
+
+## Data Initialization
+
+On program startup, the 'data.sql' file is loaded, which serves two purposes:
+
+1. For presentation purposes: It loads initial data into the 'librarydb' schema. You can find the relevant sections in the 'data.sql' file, such as '-- Drop Triggers', '-- Delete Table Contents', '-- Insert Authors', '-- Insert Books', '-- Insert Rentals', and '-- Set Autoincrement to fitting ID'. You can comment out or delete these sections if you don't want to clear all data on project startup. Make sure to drop all 6 tables (including the ...-seq tables) before restarting the application.
+2. Important part of the regular application: It inserts triggers into the 'librarydb' schema. You can find the '-- Create Trigger' section in the 'data.sql' file. Be sure not to comment out or delete these.
+
+Make sure to adjust these settings according to your requirements.
