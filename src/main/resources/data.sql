@@ -69,7 +69,7 @@ SET next_val = 17;
 UPDATE author_seq
 SET next_val = 11;
 
--- Create rent_book Trigger
+-- Create Triggers
 CREATE TRIGGER IF NOT EXISTS rent_book
     AFTER
 INSERT ON rental FOR EACH ROW
@@ -77,7 +77,6 @@ UPDATE book
 SET available = false
 WHERE id = NEW.book_id;
 
--- Create rent_book Trigger
 CREATE TRIGGER IF NOT EXISTS return_book
     AFTER
 Update ON rental
@@ -86,7 +85,6 @@ UPDATE book
 SET available = true
 WHERE id = NEW.book_id;
 
--- Create rent_book Trigger
 CREATE TRIGGER IF NOT EXISTS count_rentals
     AFTER
 INSERT ON rental FOR EACH ROW
