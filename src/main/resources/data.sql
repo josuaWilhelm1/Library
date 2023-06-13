@@ -21,6 +21,15 @@ FROM book;
 DELETE
 FROM author;
 
+
+-- Set Autoincrement to fitting ID
+UPDATE rental_seq
+SET next_val = 1;
+UPDATE book_seq
+SET next_val = 1;
+UPDATE author_seq
+SET next_val = 1;
+
 -- Insert Authors
 INSERT INTO author (id, name)
 VALUES (1, 'Charles Dickens'),
