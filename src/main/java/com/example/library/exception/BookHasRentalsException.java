@@ -1,4 +1,4 @@
-package com.example.Library.exception;
+package com.example.library.exception;
 
 public class BookHasRentalsException extends RuntimeException {
     public BookHasRentalsException(String message) {

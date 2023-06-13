@@ -1,7 +1,7 @@
-package com.example.Library.repo;
+package com.example.library.repo;
 
-import com.example.Library.model.Book;
-import com.example.Library.model.Rental;
+import com.example.library.model.Book;
+import com.example.library.model.Rental;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;

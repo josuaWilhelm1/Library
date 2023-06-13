@@ -26,7 +26,7 @@ By default, the backend runs on `localhost:8080`. If you want to change the port
 
 ## Cross-Origin Resource Sharing (CORS)
 
-To avoid Cross-Origin errors when calling the controllers from the frontend, the backend allows requests from `localhost:4200` by default. You can modify the '@CrossOrigin' annotation in the controllers located in the 'com.example.Library.controller' package to specify different allowed origins.
+To avoid Cross-Origin errors when calling the controllers from the frontend, the backend allows requests from `localhost:4200` by default. You can modify the '@CrossOrigin' annotation in the controllers located in the 'com.example.library.controller' package to specify different allowed origins.
 
 ## Database Configuration
 

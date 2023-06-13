@@ -1,10 +1,10 @@
-package com.example.Library.controller;
+package com.example.library.controller;
 
-import com.example.Library.exception.BookAlreadyReturnedException;
-import com.example.Library.exception.BookNotAvailableException;
-import com.example.Library.exception.RentalNotFoundException;
-import com.example.Library.model.Rental;
-import com.example.Library.service.RentalService;
+import com.example.library.exception.BookAlreadyReturnedException;
+import com.example.library.exception.BookNotAvailableException;
+import com.example.library.exception.RentalNotFoundException;
+import com.example.library.model.Rental;
+import com.example.library.service.RentalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

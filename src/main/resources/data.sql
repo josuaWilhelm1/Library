@@ -1,3 +1,13 @@
+# noinspection SpellCheckingInspectionForFile
+
+# noinspection SqlWithoutWhereForFile
+
+# noinspection SqlIdentifierForFile
+
+# noinspection SqlResolveForFile
+
+# noinspection SqlResolveForFile
+
 -- Drop Triggers
 DROP TRIGGER IF EXISTS rent_book;
 DROP TRIGGER IF EXISTS return_book;
@@ -14,7 +24,7 @@ FROM author;
 -- Insert Authors
 INSERT INTO author (id, name)
 VALUES (1, 'Charles Dickens'),
-       (2, 'Antoine de Saint-Exupéry'),
+       (2, 'Antoine de Saint-Exupery'),
        (3, 'J. K. Rowling'),
        (4, 'Agatha Christie'),
        (5, 'Cao Xueqin'),

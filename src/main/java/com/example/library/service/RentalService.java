@@ -1,12 +1,12 @@
-package com.example.Library.service;
+package com.example.library.service;
 
-import com.example.Library.exception.BookAlreadyReturnedException;
-import com.example.Library.exception.BookNotAvailableException;
-import com.example.Library.exception.RentalNotFoundException;
-import com.example.Library.model.Book;
-import com.example.Library.model.Rental;
-import com.example.Library.repo.BookRepo;
-import com.example.Library.repo.RentalRepository;
+import com.example.library.exception.BookAlreadyReturnedException;
+import com.example.library.exception.BookNotAvailableException;
+import com.example.library.exception.RentalNotFoundException;
+import com.example.library.model.Book;
+import com.example.library.model.Rental;
+import com.example.library.repo.BookRepo;
+import com.example.library.repo.RentalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

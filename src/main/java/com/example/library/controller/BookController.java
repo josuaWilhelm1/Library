@@ -1,10 +1,10 @@
-package com.example.Library.controller;
+package com.example.library.controller;
 
-import com.example.Library.exception.AuthorNotFoundException;
-import com.example.Library.exception.BookHasRentalsException;
-import com.example.Library.exception.BookNotFoundException;
-import com.example.Library.model.Book;
-import com.example.Library.service.BookService;
+import com.example.library.exception.AuthorNotFoundException;
+import com.example.library.exception.BookHasRentalsException;
+import com.example.library.exception.BookNotFoundException;
+import com.example.library.model.Book;
+import com.example.library.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

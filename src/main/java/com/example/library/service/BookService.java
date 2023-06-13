@@ -1,13 +1,13 @@
-package com.example.Library.service;
+package com.example.library.service;
 
-import com.example.Library.exception.AuthorNotFoundException;
-import com.example.Library.exception.BookHasRentalsException;
-import com.example.Library.exception.BookNotFoundException;
-import com.example.Library.model.Author;
-import com.example.Library.model.Book;
-import com.example.Library.repo.AuthorRepository;
-import com.example.Library.repo.BookRepo;
-import com.example.Library.repo.RentalRepository;
+import com.example.library.exception.AuthorNotFoundException;
+import com.example.library.exception.BookHasRentalsException;
+import com.example.library.exception.BookNotFoundException;
+import com.example.library.model.Author;
+import com.example.library.model.Book;
+import com.example.library.repo.AuthorRepository;
+import com.example.library.repo.BookRepo;
+import com.example.library.repo.RentalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -75,8 +75,7 @@ public class BookService {
 
     @Transactional(readOnly = true)
     public List<Book> getUnavailableBooks() {
-        List<Book> books = bookRepository.findByAvailable(false);
-        return books;
+        return bookRepository.findByAvailable(false);
     }
 
     @Transactional(readOnly = true)
@@ -91,8 +90,7 @@ public class BookService {
 
     @Transactional(readOnly = true)
     public List<Book> getBooksByGenre(String genre) {
-        List<Book> books = bookRepository.findByGenre(genre);
-        return books;
+        return bookRepository.findByGenre(genre);
     }
 
     // Unused by Frontend
