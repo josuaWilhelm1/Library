@@ -9,6 +9,7 @@ import com.example.Library.repo.BookRepo;
 import com.example.Library.repo.RentalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -19,10 +20,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class RentalService {
-
     private final RentalRepository rentalRepository;
     private final BookRepo bookRepository;
 
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = BookNotAvailableException.class)
     public Rental rentBook(Rental rental) {
         Long bookId = rental.getBook().getId();
         Optional<Book> book = bookRepository.findById(bookId);
@@ -34,7 +36,8 @@ public class RentalService {
         }
     }
 
-
+    // Unused by Frontend
+    @Transactional(readOnly = true)
     public Optional<Rental> getRentalById(Long id) {
         Optional<Rental> rental = rentalRepository.findById(id);
         if (rental.isPresent()) {
@@ -43,21 +46,19 @@ public class RentalService {
             throw new RentalNotFoundException("Rental not found");
         }
     }
-
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = {BookAlreadyReturnedException.class, RentalNotFoundException.class})
     public Rental returnBook(Long id) {
         Rental rental = rentalRepository.findById(id)
                 .orElseThrow(() -> new RentalNotFoundException("Rental not found"));
-
         if (rental.isReturned()) {
             throw new BookAlreadyReturnedException("Book is already returned");
         }
-
         rental.setReturned(true);
         return rentalRepository.save(rental);
     }
 
-
-
+    // Unused by Frontend
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteRentalById(Long id) {
         Optional<Rental> rental = rentalRepository.findById(id);
         if (rental.isPresent()) {
@@ -66,25 +67,33 @@ public class RentalService {
             throw new RentalNotFoundException("Rental not found");
         }
     }
+
+    // Unused by Frontend
+    @Transactional(readOnly = true)
     public List<Rental> getAllRentals() {
         return rentalRepository.findAll();
     }
+
+    @Transactional(readOnly = true)
     public List<Rental> getOverdueRentals() {
         LocalDate currentDate = LocalDate.now();
         return rentalRepository.findByReturnDateBeforeAndReturnedFalse(currentDate);
     }
+
+    // Unused by Frontend
+    @Transactional
     public void deleteAllRentals() {
         rentalRepository.deleteAll();
     }
 
 
+    @Transactional(readOnly = true)
     public List<Rental> getOngoingRentals() {
         return rentalRepository.findByReturnedFalse();
-
     }
 
+    @Transactional(readOnly = true)
     public List<Rental> getReturnedRentals() {
         return rentalRepository.findByReturnedTrue();
-
     }
 }

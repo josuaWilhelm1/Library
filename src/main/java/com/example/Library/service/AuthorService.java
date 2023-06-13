@@ -2,11 +2,13 @@ package com.example.Library.service;
 
 import com.example.Library.exception.AuthorHasBooksException;
 import com.example.Library.exception.AuthorNotFoundException;
+import com.example.Library.exception.BookHasRentalsException;
 import com.example.Library.model.Author;
 import com.example.Library.repo.AuthorRepository;
 import com.example.Library.repo.BookRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -20,11 +22,13 @@ public class AuthorService {
     private final AuthorRepository authorRepository;
     private final BookRepo bookRepository;
 
-
+    @Transactional(propagation = Propagation.REQUIRED)
     public Author createAuthor(Author author) {
         return authorRepository.save(author);
     }
 
+    // Unused by Frontend
+    @Transactional(propagation= Propagation.REQUIRES_NEW, rollbackFor = BookHasRentalsException.class )
     public void deleteAuthorById(Long id) {
         Optional<Author> authorOptional = authorRepository.findById(id);
         if (authorOptional.isPresent()) {
@@ -37,6 +41,9 @@ public class AuthorService {
             throw new AuthorNotFoundException("Author not found");
         }
     }
+
+    // Unused by Frontend
+    @Transactional(readOnly = true)
     public Optional<Author> getAuthorById(Long id) {
         Optional<Author> author = authorRepository.findById(id);
         if (author.isPresent()) {
@@ -46,10 +53,13 @@ public class AuthorService {
         }
     }
 
+    @Transactional(readOnly = true)
     public List<Author> getAllAuthors() {
         return authorRepository.findAll();
     }
 
+    // Unused by Frontend
+    @Transactional(propagation= Propagation.REQUIRES_NEW, rollbackFor = AuthorHasBooksException.class )
     public void deleteAllAuthors() {
         List<Author> authors = authorRepository.findAll();
         for (Author author : authors) {

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200") //Allow te Frontend to communicate with this Controller
 @RequestMapping(path = "/v1")
 @RequiredArgsConstructor
 public class RentalController {
@@ -31,6 +31,7 @@ public class RentalController {
         }
     }
 
+    //Unused by Frontend
     @GetMapping("/rental/{id}")
     public ResponseEntity<Rental> getRentalById(@PathVariable Long id) {
         Optional<Rental> rental = rentalService.getRentalById(id);
@@ -52,6 +53,7 @@ public class RentalController {
         }
     }
 
+    //Unused by Frontend
     @DeleteMapping("/rental/{id}")
     public ResponseEntity<String> deleteRentalById(@PathVariable Long id) {
         try {
@@ -63,6 +65,7 @@ public class RentalController {
         }
     }
 
+    //Unused by Frontend
     @GetMapping("/rentals")
     public List<Rental> getAllRentals() {
         return rentalService.getAllRentals();
@@ -73,18 +76,20 @@ public class RentalController {
         List<Rental> overdueRentals = rentalService.getOverdueRentals();
         return ResponseEntity.ok(overdueRentals);
     }
+
     @GetMapping("/rentals/ongoing")
     public ResponseEntity<List<Rental>> getOngoingRentals() {
         List<Rental> overdueRentals = rentalService.getOngoingRentals();
         return ResponseEntity.ok(overdueRentals);
     }
+
     @GetMapping("/rentals/returned")
     public ResponseEntity<List<Rental>> getReturnedRentals() {
         List<Rental> overdueRentals = rentalService.getReturnedRentals();
         return ResponseEntity.ok(overdueRentals);
     }
 
-
+    //Unused by Frontend
     @DeleteMapping("/rentals")
     public ResponseEntity<String> deleteAllRentals() {
         rentalService.deleteAllRentals();

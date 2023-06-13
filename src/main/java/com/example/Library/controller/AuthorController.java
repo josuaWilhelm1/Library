@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200") //Allow te Frontend to communicate with this Controller
 @RequestMapping(path = "/v1")
 @RequiredArgsConstructor
 public class AuthorController {
@@ -24,6 +24,7 @@ public class AuthorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(authorService.createAuthor(author));
     }
 
+    //Unused by Frontend
     @DeleteMapping("/author/{id}")
     public ResponseEntity<String> deleteAuthorById(@PathVariable Long id) {
         try {
@@ -38,6 +39,7 @@ public class AuthorController {
         }
     }
 
+    //Unused by Frontend
     @GetMapping("/author/{id}")
     public ResponseEntity<Author> getAuthorById(@PathVariable Long id) {
         Optional<Author> author = authorService.getAuthorById(id);
@@ -50,6 +52,7 @@ public class AuthorController {
         return authorService.getAllAuthors();
     }
 
+    //Unused by Frontend
     @DeleteMapping("/authors")
     public ResponseEntity<String> deleteAllAuthors() {
         try {

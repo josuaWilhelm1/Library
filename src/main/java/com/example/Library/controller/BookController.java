@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200") //Allow te Frontend to communicate with this Controller
 @RequestMapping(path = "/v1")
 @RequiredArgsConstructor
 public class BookController {
@@ -31,6 +31,7 @@ public class BookController {
         }
     }
 
+    //Unused by Frontend
     @DeleteMapping("/book/{id}")
     public ResponseEntity<String> deleteBookById(@PathVariable Long id) {
         try {
@@ -43,6 +44,7 @@ public class BookController {
         }
     }
 
+    //Unused by Frontend
     @GetMapping("/book/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
         Optional<Book> book = bookService.getBookById(id);
@@ -50,6 +52,7 @@ public class BookController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
+    //Unused by Frontend
     @GetMapping("/books")
     public ResponseEntity<List<Book>> getAllBooks() {
         List<Book> books = bookService.getAllBooks();
@@ -89,6 +92,7 @@ public class BookController {
         }
     }
 
+    //Unused by Frontend
     @DeleteMapping("/books")
     public ResponseEntity<String> deleteAllBooks() {
         try {
