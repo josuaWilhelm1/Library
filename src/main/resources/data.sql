@@ -1,13 +1,3 @@
-# noinspection SpellCheckingInspectionForFile
-
-# noinspection SqlWithoutWhereForFile
-
-# noinspection SqlIdentifierForFile
-
-# noinspection SqlResolveForFile
-
-# noinspection SqlResolveForFile
-
 -- Drop Triggers
 DROP TRIGGER IF EXISTS rent_book;
 DROP TRIGGER IF EXISTS return_book;
